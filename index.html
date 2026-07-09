@@ -1,3 +1,393 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3775bc17c113fd1ff5e86a7e192c585f42921832e4d2c22d97d915a774b0ac61
-size 268712437
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiza Sajjad | Fashion Designer & Wearable Artist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
+  --border:#232323;--border2:#2e2e2e;
+  --text:#f0ede8;--text2:#9a9590;--text3:#4d4845;
+  --accent:#c8a97e;--accent2:#8b6d4a;
+  --sans:'DM Sans',sans-serif;--serif:'Cormorant Garamond',serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden}
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-family:var(--serif);font-size:18px;font-weight:300;letter-spacing:.25em;text-transform:uppercase;color:var(--text);text-decoration:none;cursor:pointer}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--text)}
+/* HERO */
+#home-view{}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:#050505}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(139,109,74,.12) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--text3);margin-bottom:20px}
+.hero-name{font-family:var(--serif);font-size:clamp(52px,8vw,96px);font-weight:300;letter-spacing:.12em;text-transform:uppercase;line-height:1;margin-bottom:16px}
+.hero-sub{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--text2);margin-bottom:40px}
+.hero-cta{display:inline-block;border:1px solid rgba(200,169,126,.4);color:var(--accent);padding:14px 36px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all .4s}
+.hero-cta:hover{background:var(--accent);color:#1a1208}
+/* PORTFOLIO SECTION */
+.section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-header{display:flex;align-items:baseline;gap:20px;margin-bottom:60px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.section-heading{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:.1em;text-transform:uppercase}
+.section-caption{font-size:11px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase}
+/* PROJECT GRID */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.proj-card-home{cursor:pointer;overflow:hidden;position:relative;background:var(--bg3)}
+.proj-card-home:hover .card-img{transform:scale(1.04)}
+.proj-card-home:hover .card-info{background:rgba(10,10,10,.96)}
+.card-img-wrap{overflow:hidden;aspect-ratio:1/1}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.card-img-empty{width:100%;aspect-ratio:1/1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:20px 18px;background:rgba(10,10,10,.75);backdrop-filter:blur(4px);transition:background .3s}
+.card-num{font-size:10px;color:var(--text3);letter-spacing:.15em;display:block;margin-bottom:3px}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--text);line-height:1.2;margin-bottom:4px}
+.card-tag{font-size:10px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+/* BIO */
+.bio-section{background:var(--bg2);padding:100px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.bio-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;gap:80px;align-items:start}
+.bio-portrait{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--border2)}
+.bio-portrait-empty{width:100%;aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:48px;color:var(--text3)}
+.bio-text{display:flex;flex-direction:column;gap:32px;padding-top:8px}
+.bio-name-block h2{font-family:var(--serif);font-size:42px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.bio-name-block p{font-size:12px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase}
+.bio-block h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.bio-block p{font-size:14px;color:var(--text2);line-height:1.8;font-weight:300}
+/* CONTACT */
+.contact-section{padding:100px 40px}
+.contact-inner{max-width:600px;margin:0 auto;text-align:center}
+.contact-inner h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.contact-inner .sub{font-size:11px;color:var(--text3);letter-spacing:.18em;text-transform:uppercase;margin-bottom:60px}
+.contact-card{border:1px solid var(--border);padding:48px}
+.con-item{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.con-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.con-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.con-value{font-size:16px;color:var(--text);letter-spacing:.04em}
+.con-value a{color:var(--accent);text-decoration:none}
+.con-value a:hover{text-decoration:underline}
+.social-links{display:flex;justify-content:center;gap:32px;margin-top:32px}
+.social-links a{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .2s}
+.social-links a:hover{color:var(--text)}
+footer{padding:32px 40px;text-align:center;border-top:1px solid var(--border);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text3)}
+/* PROJECT DETAIL PAGE */
+.proj-page{padding-top:80px;min-height:100vh}
+.hidden{display:none}
+.proj-page-inner{max-width:1000px;margin:0 auto;padding:60px 40px}
+.back-btn{background:none;border:1px solid var(--border2);color:var(--text2);padding:10px 20px;font-family:var(--sans);font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-bottom:48px;display:inline-block}
+.back-btn:hover{border-color:var(--text);color:var(--text)}
+.proj-meta{margin-bottom:40px}
+.proj-tag-label{font-size:10px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:8px}
+.proj-page-title{font-family:var(--serif);font-size:clamp(32px,5vw,56px);font-weight:300;letter-spacing:.08em;text-transform:uppercase;line-height:1.1}
+.proj-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3px;margin-bottom:48px}
+.proj-images .proj-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.proj-images .proj-img:first-child:only-child{aspect-ratio:16/9;grid-column:1/-1}
+.no-img-notice{grid-column:1/-1;padding:48px;text-align:center;color:var(--text3);font-size:12px;letter-spacing:.1em;background:var(--bg3)}
+.proj-desc{font-size:15px;color:var(--text2);line-height:1.9;font-weight:300;max-width:720px}
+@media(max-width:768px){
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .bio-inner{grid-template-columns:1fr}
+  nav{padding:0 20px}
+  .section,.contact-section{padding:60px 20px}
+}
+@media(max-width:480px){.projects-grid{grid-template-columns:1fr}}
+</style>
+<script>
+function showAllNone(){
+  var pages=document.getElementsByClassName('proj-page');
+  for(var i=0;i<pages.length;i++){
+    pages[i].style.display='none';
+  }
+}
+function showHome(){
+  showAllNone();
+  document.getElementById('home-view').style.display='block';
+  window.scrollTo(0,0);
+}
+function showProject(id){
+  var pg=document.getElementById('project-'+id);
+  if(pg){
+    showAllNone();
+    document.getElementById('home-view').style.display='none';
+    pg.style.display='block';
+    window.scrollTo(0,0);
+  } else {
+    setTimeout(function(){showProject(id);}, 300);
+  }
+}
+function scrollToSection(id){
+  showAllNone();
+  document.getElementById('home-view').style.display='block';
+  setTimeout(function(){
+    var el=document.getElementById(id);
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  },100);
+}
+</script>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand" onclick="showHome()">Fiza Sajjad</span>
+  <div class="nav-links">
+    <a onclick="showHome()">Portfolio</a>
+    <a onclick="scrollToSection('bio-section')">About</a>
+    <a onclick="scrollToSection('contact-section')">Contact</a>
+  </div>
+</nav>
+
+<div id="home-view">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Fashion Design &amp; Wearable Art — BNU Lahore</p>
+      <h1 class="hero-name">Fiza Sajjad</h1>
+      <p class="hero-sub">Sculpture · Draping · Textile · Photography</p>
+      <span class="hero-cta" onclick="document.getElementById('portfolio-section').scrollIntoView({behavior:'smooth'})">View Portfolio</span>
+    </div>
+  </div>
+
+  <div class="section" id="portfolio-section">
+    <div class="section-header">
+      <h2 class="section-heading">Selected Works</h2>
+      <span class="section-caption">BNU Lahore — Collections &amp; Projects</span>
+    </div>
+    <div class="projects-grid">
+    <div class="proj-card-home" onclick="showProject(1)">
+      <div class="card-img-wrap"><img src="images/img_000_4fdcdf45e9c5.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">01</span>
+        <h3 class="card-title">Veer Zaara — Gastronomic Storytelling</h3>
+        <span class="card-tag">Food Design</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(2)">
+      <div class="card-img-wrap"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">02</span>
+        <h3 class="card-title">Tiffin — Memory & Invisible Labor</h3>
+        <span class="card-tag">Conceptual</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(3)">
+      <div class="card-img-wrap"><img src="images/img_002_f1bd1a07ff51.jpeg" alt="Body Extension — Wearable Sculpture" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">03</span>
+        <h3 class="card-title">Body Extension — Wearable Sculpture</h3>
+        <span class="card-tag">Wearable Art</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(4)">
+      <div class="card-img-wrap"><img src="images/img_003_a05f9612b6d5.jpeg" alt="Experimental Draping Study" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">04</span>
+        <h3 class="card-title">Experimental Draping Study</h3>
+        <span class="card-tag">Draping Study</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(5)">
+      <div class="card-img-wrap"><img src="images/img_004_c5f986a78f30.jpeg" alt="Old Lahore — Street Food Photography" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">05</span>
+        <h3 class="card-title">Old Lahore — Street Food Photography</h3>
+        <span class="card-tag">Photography</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(6)">
+      <div class="card-img-wrap"><img src="images/img_005_48cc401d9881.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">06</span>
+        <h3 class="card-title">Period Poverty — Fashion as Social Commentary</h3>
+        <span class="card-tag">Textile Design</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(7)">
+      <div class="card-img-wrap"><img src="images/img_006_cc69e7d05109.jpeg" alt="Serpent Queen — Narrative Fashion" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">07</span>
+        <h3 class="card-title">Serpent Queen — Narrative Fashion</h3>
+        <span class="card-tag">Couture</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(8)">
+      <div class="card-img-wrap"><img src="images/img_007_09e493e33c88.jpeg" alt="Pottery Workers — Documentary Photography" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">08</span>
+        <h3 class="card-title">Pottery Workers — Documentary Photography</h3>
+        <span class="card-tag">Photography</span>
+      </div>
+    </div>
+    <div class="proj-card-home" onclick="showProject(9)">
+      <div class="card-img-wrap"><img src="images/img_008_14ce997ffda0.jpeg" alt="Mermaid — Childhood to Adulthood" class="card-img"></div>
+      <div class="card-info">
+        <span class="card-num">09</span>
+        <h3 class="card-title">Mermaid — Childhood to Adulthood</h3>
+        <span class="card-tag">Avant-Garde</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="bio-section" id="bio-section">
+    <div class="bio-inner">
+      <div>
+        <img class="bio-portrait" src="images/img_009_17f35fd48e51.jpeg" alt="Portrait of Fiza Sajjad">
+      </div>
+      <div class="bio-text">
+        <div class="bio-name-block">
+          <h2>Fiza Sajjad</h2>
+          <p>Lahore, Pakistan — Beaconhouse National University</p>
+        </div>
+        <div class="bio-block">
+          <h4>— Artist Statement</h4>
+          <p>I am a fashion designer and wearable artist completing my final major studio evaluations at BNU Lahore. My practice exists at the intersection of haute couture, structural draping, and non-traditional material experimentation. I view garments not as decorative apparel but as anatomical sculptures designed to communicate architectural form, emotional depth, and cultural identity.</p>
+        </div>
+        <div class="bio-block">
+          <h4>— Work Style</h4>
+          <p>My work is deeply physical, tactile, and intuitive — anchored on direct form manipulation, structural pinning, and artisan engineering. Whether transforming industrial denim into fluid curves or crafting metallic wearable sculptures, my process values craftsmanship over automated reproduction. I work across fashion design, wearable art, photography, and conceptual installation.</p>
+        </div>
+        <div class="bio-block">
+          <h4>— Aesthetics</h4>
+          <p>Stark, moody, and intentionally impactful. My work operates on high-contrast emotional variables — pairing dark, dramatic concepts with fluid textiles, experimental print, and aggressive metallic accents. I am drawn to themes of transformation, identity, vulnerability, and the tension between softness and structure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section" id="contact-section">
+    <div class="contact-inner">
+      <h2>Connect</h2>
+      <p class="sub">For commissions, press pulls, or creative collaborations</p>
+      <div class="contact-card">
+        <div class="con-item">
+          <div class="con-label">Email</div>
+          <div class="con-value"><a href="mailto:fizzasajjad2003@gmail.com">fizzasajjad2003@gmail.com</a></div>
+        </div>
+        <div class="con-item">
+          <div class="con-label">Phone</div>
+          <div class="con-value">+92 333 3335821</div>
+        </div>
+        <div class="con-item">
+          <div class="con-label">Location</div>
+          <div class="con-value">Lahore, Pakistan</div>
+        </div>
+        <div class="con-item"><div class="con-label">Available For</div><div class="con-value" style="font-size:13px;color:var(--text2)">Available for commissions, press pulls, or creative collaborations.</div></div>
+      </div>
+      <div class="social-links">
+        <a href="#">Instagram — @fizasajjad</a>
+        
+        <a href="mailto:fizzasajjad2003@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Fiza Sajjad. All Rights Reserved.</footer>
+</div>
+
+
+    <section id="project-1" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Food Design</span>
+          <h2 class="proj-page-title">Veer Zaara — Gastronomic Storytelling</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_000_4fdcdf45e9c5.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_011_40df1f7fb3d7.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_012_9da6b3407ca0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_013_1273f73ddede.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_014_d10650cee4d0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"></div>
+        <div class="proj-desc">This project is a conceptual gastronomic storytelling experience inspired by the Bollywood film Veer Zaara, where cinema is reimagined through food, emotion, and visual design. The project explores how a menu can become a narrative medium by transforming iconic moments, relationships, and emotional themes from the film into a carefully curated five-course dining experience. Each course was inspired by a different stage of Veer and Zaara's journey — from their first meeting and the cultural connection between India and Pakistan, to themes of separation, sacrifice, patience, longing, and eventual reunion.<br><br>The dishes were designed with symbolic ingredients, textures, and presentations that reflected the emotional depth of the story. Elements such as jaggery and salt represented bittersweet love and divided borders, while slow-cooked dishes and layered desserts symbolized years of waiting, memory, and unspoken emotions. Alongside the food design, the visual identity of the menu was developed using aged paper textures, vintage typography, and nostalgic imagery to capture the timeless essence of the film.</div>
+      </div>
+    </section>
+    <section id="project-2" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Conceptual</span>
+          <h2 class="proj-page-title">Tiffin — Memory & Invisible Labor</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_016_a2bdb32c5fad.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_017_e6612d4d44fd.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_018_af628218f8ec.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_019_b7e9d22cbd86.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_020_55d3f53d61b2.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_021_77b41e6377a3.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_022_c372f15494cf.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_023_abaadd8e79de.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_024_9524ba78a52f.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_025_e4bbce8001d4.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"></div>
+        <div class="proj-desc">This project explores the lunchbox as a vessel of memory, identity, care, and invisible labor. Rooted in the everyday culture of tiffins within homes, schools, and workplaces, the project investigates how food carries emotional histories, routines, sacrifices, and unspoken acts of love. What may appear to be an ordinary packed meal often holds stories of motherhood, responsibility, affection, financial circumstances, cultural values, and personal memory. The project aims to make visible the emotional and physical labor hidden behind these everyday acts of caregiving, especially the work performed by women within domestic spaces that often goes unnoticed and unacknowledged.<br><br>As part of the research process, I created a questionnaire and interviewed different women about the lunchboxes they prepared for their children and families. The final execution combines food, storytelling, textiles, illustration, and visual documentation to transform ordinary lunchboxes into intimate narrative archives.</div>
+      </div>
+    </section>
+    <section id="project-3" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Wearable Art</span>
+          <h2 class="proj-page-title">Body Extension — Wearable Sculpture</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_002_f1bd1a07ff51.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img"><img src="images/img_028_6106170c1f2e.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img"></div>
+        <div class="proj-desc">This project explores the idea of body extension as both a physical transformation and a personal response to insecurity and self-perception. The wearable finger extensions were hand-crafted as sculptural pieces designed to elongate the appearance of the hands, inspired by my own insecurity about having hands that felt too small and short. By extending the fingers through exaggerated metallic nail forms, the project transforms the body into something more powerful, dramatic, and visually amplified, turning a personal vulnerability into a conceptual design statement.<br><br>The sharp, elongated structures challenge conventional ideas of beauty and proportion while also functioning as an emotional armor. The extensions alter the movement and presence of the hands, making them appear more dominant, elegant, and expressive. Through this project, I explored how wearable objects can reshape the relationship between the body and identity, using design as a way to confront insecurities and reinterpret them through experimentation and form.</div>
+      </div>
+    </section>
+    <section id="project-4" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Draping Study</span>
+          <h2 class="proj-page-title">Experimental Draping Study</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_003_a05f9612b6d5.jpeg" alt="Experimental Draping Study" class="proj-img"><img src="images/img_030_8a39b6aec929.jpeg" alt="Experimental Draping Study" class="proj-img"><img src="images/img_031_9c84f23ae941.jpeg" alt="Experimental Draping Study" class="proj-img"></div>
+        <div class="proj-desc">This project is an experimental draping study exploring sculptural form, volume, and silhouette through intuitive fabric manipulation. The garment was created entirely by hand directly on the mannequin without stitching or conventional pattern-making, using only draping, folding, gathering, and pinning techniques. By allowing the fabric to guide the process organically, the piece developed into a fluid yet structured form that emphasizes movement, texture, and spatial experimentation.<br><br>The exaggerated folds and asymmetrical volumes transform the garment into a three-dimensional sculptural surface, distorting the natural silhouette and creating a balance between softness and structure. Through this process, the project explores draping not only as a technical skill but also as an expressive and artistic design method, where fabric becomes a medium for experimentation, transformation, and form-building.</div>
+      </div>
+    </section>
+    <section id="project-5" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Photography</span>
+          <h2 class="proj-page-title">Old Lahore — Street Food Photography</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_004_c5f986a78f30.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_033_03dd753498d9.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_034_355ce993e1b7.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_035_dc2f85cae154.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_036_3020f3f65ae8.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_037_c1bfe289aa53.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"></div>
+        <div class="proj-desc">This photography project documents the atmosphere, labor, and sensory experience of Old Lahore's food streets through candid visual storytelling. Focusing on local food vendors, traditional cooking methods, and the environments surrounding them, the project captures the energy and authenticity embedded within Lahore's street food culture. Through close-up compositions, steam-filled frames, textures, and moments of preparation, the photographs highlight the relationship between food, people, and everyday urban life.<br><br>The series explores the behind-the-scenes process, the intensity of large-scale cooking, the worn utensils, and the human presence behind every meal. From simmering pots and freshly cooked parathas to quiet details within the food stalls, the images aim to preserve the atmosphere and visual richness of Old Lahore's culinary spaces. The warm tones, documentary-style framing, and focus on ordinary moments create a sense of nostalgia and realism.</div>
+      </div>
+    </section>
+    <section id="project-6" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Textile Design</span>
+          <h2 class="proj-page-title">Period Poverty — Fashion as Social Commentary</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_005_48cc401d9881.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_039_082bb299f79c.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_040_7a7a20caadc3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_041_4bf9d8b766e3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"></div>
+        <div class="proj-desc">This project explores the issue of period poverty through the intersection of printmaking, textile design, and draped fashion. The concept was developed around the silence, stigma, and lack of accessibility surrounding menstruation, particularly for women who experience financial, social, and cultural barriers related to menstrual health. I created an original print inspired by the emotional and physical realities associated with menstruation, combining abstract organic forms, layered textures, splashes, stains, and delicate floral imagery to symbolize the contrast between pain and softness, discomfort and femininity, visibility and suppression.<br><br>After developing the print, it was digitally transferred onto fabric and transformed into a sculptural draped garment created entirely on the mannequin without stitching. The garment was formed through draping, wrapping, pleating, and fabric manipulation, allowing the textile print itself to become the primary storytelling element. The project also explores how fashion and textiles can be used as mediums for social commentary and awareness rather than purely aesthetic objects.</div>
+      </div>
+    </section>
+    <section id="project-7" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Couture</span>
+          <h2 class="proj-page-title">Serpent Queen — Narrative Fashion</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_006_cc69e7d05109.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_043_ef193547c756.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_044_59f2c12246b7.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_045_cbb9ac9cafa1.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"></div>
+        <div class="proj-desc">This project is a narrative-based fashion exploration inspired by the mythology and symbolism of snakes, particularly the idea of a serpent queen who represents power, transformation, seduction, and rebirth. The garment was developed as a character-driven visual story, combining fashion, printmaking, and textile experimentation to create a dark yet regal aesthetic. Inspired by serpentine textures, fantasy narratives, and mythical femininity, the project explores the snake not only as a symbol of danger, but also as a representation of resilience, protection, and feminine strength.<br><br>As part of the process, I designed and developed an original print inspired by snake skin textures, scales, shadows, and organic flowing forms. Deep reds, blacks, and dark maroon tones were used to evoke intensity, mystery, royalty, and danger. The outfit consists of a structured corset-inspired top paired with a flowing skirt and a sheer veil-like outer layer. Military-inspired elements were also incorporated, adding a sense of armor and authority to the overall character.</div>
+      </div>
+    </section>
+    <section id="project-8" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Photography</span>
+          <h2 class="proj-page-title">Pottery Workers — Documentary Photography</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_007_09e493e33c88.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_047_0b4a3cbd1521.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_048_8315ceabf0ab.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_049_debf860daef1.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_050_171464ea691d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_051_e233f81f823f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_052_4d1fcc42421f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_053_160d8afb960d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_054_35cffa937a3c.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"></div>
+        <div class="proj-desc">This photography project documents the lives and labour of local pottery workers, focusing on the physical process of shaping clay as well as the environment in which these artisans work. Through close-up details, textures, and environmental shots, the series captures the relationship between human hands, earth, movement, and tradition. The photographs explore pottery not only as a craft, but as a form of storytelling and cultural heritage that has been passed down through generations.<br><br>The project highlights the contrast between the beauty of handmade craftsmanship and the reality of the labour behind it. The series includes intimate photographs of hands moulding clay on the wheel, textures of wet earth, spinning pottery forms, and the surfaces of unfinished ceramic pieces. Through this series, I wanted to bring attention to the emotional and economic realities of artisans whose work is deeply connected to culture and tradition, yet often remains underappreciated.</div>
+      </div>
+    </section>
+    <section id="project-9" class="proj-page hidden">
+      <div class="proj-page-inner">
+        <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+        <div class="proj-meta">
+          <span class="proj-tag-label">Avant-Garde</span>
+          <h2 class="proj-page-title">Mermaid — Childhood to Adulthood</h2>
+        </div>
+        <div class="proj-images"><img src="images/img_008_14ce997ffda0.jpeg" alt="Mermaid — Childhood to Adulthood" class="proj-img"></div>
+        <div class="proj-desc">This project explores the psychological and emotional transition from childhood innocence to adulthood awareness through fashion and visual storytelling. The main idea behind the project is to question why perception changes as we grow older, and how the things we once viewed with wonder, softness, and comfort slowly begin to feel darker, more complex, and emotionally layered.<br><br>To communicate this transformation, I used the concept of mermaids as the central visual metaphor throughout the collection. In childhood, mermaids are often seen as magical, beautiful, gentle, and comforting creatures. However, as we grow older, the perception of mermaids changes — they become mysterious, seductive, dangerous, and emotionally darker figures. The garments and visual elements were designed to capture this emotional duality: soft pastel tones, flowing silhouettes, and translucent layers represent childhood softness, while distorted forms, exaggerated structures, and darker undertones reflect the emotional complexity of adulthood.</div>
+      </div>
+    </section>
+
+</body>
+</html>
