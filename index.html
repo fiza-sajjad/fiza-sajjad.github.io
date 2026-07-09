@@ -85,8 +85,8 @@ footer{padding:32px 40px;text-align:center;border-top:1px solid var(--border);fo
 .proj-tag-label{font-size:10px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:8px}
 .proj-page-title{font-family:var(--serif);font-size:clamp(32px,5vw,56px);font-weight:300;letter-spacing:.08em;text-transform:uppercase;line-height:1.1}
 .proj-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3px;margin-bottom:48px}
-.proj-images .proj-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
-.proj-images .proj-img:first-child:only-child{aspect-ratio:16/9;grid-column:1/-1}
+.proj-images .proj-img{width:100%;max-height:80vh;object-fit:contain;display:block;cursor:zoom-in;background:var(--bg3)}
+.proj-images .proj-img:first-child:only-child{grid-column:1/-1}
 .no-img-notice{grid-column:1/-1;padding:48px;text-align:center;color:var(--text3);font-size:12px;letter-spacing:.1em;background:var(--bg3)}
 .proj-desc{font-size:15px;color:var(--text2);line-height:1.9;font-weight:300;max-width:720px}
 /* THESIS SECTION */
@@ -101,7 +101,7 @@ footer{padding:32px 40px;text-align:center;border-top:1px solid var(--border);fo
 .thesis-cta:hover{background:var(--accent);color:#1a1208}
 /* THESIS DETAIL PAGE */
 .thesis-page{padding-top:80px;min-height:100vh}
-.thesis-page-inner{max-width:1000px;margin:0 auto;padding:60px 40px}
+.thesis-page-inner{max-width:1100px;margin:0 auto;padding:60px 40px}
 .thesis-tabs{display:flex;gap:2px;margin-bottom:48px;border-bottom:1px solid var(--border)}
 .thesis-tab{background:none;border:none;color:var(--text3);padding:16px 24px;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
 .thesis-tab:hover{color:var(--text)}
@@ -111,15 +111,28 @@ footer{padding:32px 40px;text-align:center;border-top:1px solid var(--border);fo
 .thesis-look-header{margin-bottom:32px}
 .thesis-look-header .look-num{font-size:10px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:8px}
 .thesis-look-header h3{font-family:var(--serif);font-size:clamp(24px,4vw,36px);font-weight:300;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
-.thesis-look-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;margin-bottom:32px;border:1px solid var(--border2)}
+.thesis-look-img{width:100%;max-height:80vh;object-fit:contain;display:block;margin-bottom:32px;border:1px solid var(--border2);cursor:zoom-in;background:var(--bg3)}
+.thesis-images-grid{display:grid;grid-template-columns:1fr;gap:3px;margin-bottom:48px}
+.thesis-images-grid .proj-img{width:100%;max-height:80vh;object-fit:contain;display:block;cursor:zoom-in;background:var(--bg3)}
 .thesis-look-desc{font-size:15px;color:var(--text2);line-height:1.9;font-weight:300;max-width:720px}
 .thesis-about{margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border)}
 .thesis-about h3{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
 .thesis-about p{font-size:14px;color:var(--text2);line-height:1.9;font-weight:300;max-width:720px}
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.active{display:flex}
+.lightbox img{max-width:95vw;max-height:95vh;object-fit:contain}
+.lightbox-close{position:fixed;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;z-index:10000;background:none;border:none;font-family:var(--sans);opacity:.7;transition:opacity .2s}
+.lightbox-close:hover{opacity:1}
+.lightbox-nav{position:fixed;top:50%;transform:translateY(-50%);color:#fff;font-size:36px;cursor:pointer;z-index:10000;background:none;border:none;opacity:.5;transition:opacity .2s;padding:20px}
+.lightbox-nav:hover{opacity:1}
+.lightbox-prev{left:16px}
+.lightbox-next{right:16px}
 @media(max-width:768px){
   .thesis-preview-inner{grid-template-columns:1fr}
   .thesis-tabs{flex-wrap:wrap}
   .thesis-tab{padding:12px 16px;font-size:10px}
+  .lightbox-nav{font-size:24px;padding:12px}
 }
 @media(max-width:480px){.projects-grid{grid-template-columns:1fr}}
 </style>
@@ -170,6 +183,30 @@ function switchThesisTab(lookNum){
   tabs[lookNum-1].classList.add('active');
   contents[lookNum-1].classList.add('active');
 }
+var lightboxImages=[];
+var lightboxIndex=0;
+function openLightbox(img){
+  var grid=img.parentElement;
+  lightboxImages=Array.from(grid.querySelectorAll('.proj-img')).map(function(i){return i.src});
+  lightboxIndex=lightboxImages.indexOf(img.src);
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow='';
+}
+function lightboxNav(dir){
+  lightboxIndex=(lightboxIndex+dir+lightboxImages.length)%lightboxImages.length;
+  document.getElementById('lightbox-img').src=lightboxImages[lightboxIndex];
+}
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('lightbox').classList.contains('active'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowLeft')lightboxNav(-1);
+  if(e.key==='ArrowRight')lightboxNav(1);
+});
 </script>
 </head>
 <body>
@@ -277,7 +314,7 @@ function switchThesisTab(lookNum){
 
   <div class="thesis-preview" id="thesis-preview-section">
     <div class="thesis-preview-inner">
-      <img class="thesis-preview-img" src="images/img_008_14ce997ffda0.jpeg" alt="Mermaid Thesis Collection — All 4 Looks">
+      <img class="thesis-preview-img" src="images/look1_full.jpeg" alt="Mermaid Thesis Collection — Look 1">
       <div class="thesis-preview-text">
         <span class="label">Final Year Thesis — BNU Lahore</span>
         <h2>Beneath the Surface — The Mermaid Collection</h2>
@@ -351,7 +388,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Food Design</span>
           <h2 class="proj-page-title">Veer Zaara — Gastronomic Storytelling</h2>
         </div>
-        <div class="proj-images"><img src="images/img_000_4fdcdf45e9c5.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_011_40df1f7fb3d7.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_012_9da6b3407ca0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_013_1273f73ddede.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"><img src="images/img_014_d10650cee4d0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_000_4fdcdf45e9c5.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img" onclick="openLightbox(this)"><img src="images/img_011_40df1f7fb3d7.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img" onclick="openLightbox(this)"><img src="images/img_012_9da6b3407ca0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img" onclick="openLightbox(this)"><img src="images/img_013_1273f73ddede.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img" onclick="openLightbox(this)"><img src="images/img_014_d10650cee4d0.jpeg" alt="Veer Zaara — Gastronomic Storytelling" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project is a conceptual gastronomic storytelling experience inspired by the Bollywood film Veer Zaara, where cinema is reimagined through food, emotion, and visual design. The project explores how a menu can become a narrative medium by transforming iconic moments, relationships, and emotional themes from the film into a carefully curated five-course dining experience. Each course was inspired by a different stage of Veer and Zaara's journey — from their first meeting and the cultural connection between India and Pakistan, to themes of separation, sacrifice, patience, longing, and eventual reunion.<br><br>The dishes were designed with symbolic ingredients, textures, and presentations that reflected the emotional depth of the story. Elements such as jaggery and salt represented bittersweet love and divided borders, while slow-cooked dishes and layered desserts symbolized years of waiting, memory, and unspoken emotions. Alongside the food design, the visual identity of the menu was developed using aged paper textures, vintage typography, and nostalgic imagery to capture the timeless essence of the film.</div>
       </div>
     </section>
@@ -362,7 +399,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Conceptual</span>
           <h2 class="proj-page-title">Tiffin — Memory & Invisible Labor</h2>
         </div>
-        <div class="proj-images"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_016_a2bdb32c5fad.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_017_e6612d4d44fd.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_018_af628218f8ec.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_019_b7e9d22cbd86.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_020_55d3f53d61b2.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_021_77b41e6377a3.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_022_c372f15494cf.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_023_abaadd8e79de.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_024_9524ba78a52f.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_025_e4bbce8001d4.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_016_a2bdb32c5fad.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_017_e6612d4d44fd.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_018_af628218f8ec.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_019_b7e9d22cbd86.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_020_55d3f53d61b2.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_021_77b41e6377a3.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_022_c372f15494cf.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_023_abaadd8e79de.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_024_9524ba78a52f.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_025_e4bbce8001d4.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"><img src="images/img_001_a5948b4a02f0.jpeg" alt="Tiffin — Memory & Invisible Labor" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project explores the lunchbox as a vessel of memory, identity, care, and invisible labor. Rooted in the everyday culture of tiffins within homes, schools, and workplaces, the project investigates how food carries emotional histories, routines, sacrifices, and unspoken acts of love. What may appear to be an ordinary packed meal often holds stories of motherhood, responsibility, affection, financial circumstances, cultural values, and personal memory. The project aims to make visible the emotional and physical labor hidden behind these everyday acts of caregiving, especially the work performed by women within domestic spaces that often goes unnoticed and unacknowledged.<br><br>As part of the research process, I created a questionnaire and interviewed different women about the lunchboxes they prepared for their children and families. The final execution combines food, storytelling, textiles, illustration, and visual documentation to transform ordinary lunchboxes into intimate narrative archives.</div>
       </div>
     </section>
@@ -373,7 +410,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Wearable Art</span>
           <h2 class="proj-page-title">Body Extension — Wearable Sculpture</h2>
         </div>
-        <div class="proj-images"><img src="images/img_002_f1bd1a07ff51.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img"><img src="images/img_028_6106170c1f2e.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_002_f1bd1a07ff51.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img" onclick="openLightbox(this)"><img src="images/img_028_6106170c1f2e.jpeg" alt="Body Extension — Wearable Sculpture" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project explores the idea of body extension as both a physical transformation and a personal response to insecurity and self-perception. The wearable finger extensions were hand-crafted as sculptural pieces designed to elongate the appearance of the hands, inspired by my own insecurity about having hands that felt too small and short. By extending the fingers through exaggerated metallic nail forms, the project transforms the body into something more powerful, dramatic, and visually amplified, turning a personal vulnerability into a conceptual design statement.<br><br>The sharp, elongated structures challenge conventional ideas of beauty and proportion while also functioning as an emotional armor. The extensions alter the movement and presence of the hands, making them appear more dominant, elegant, and expressive. Through this project, I explored how wearable objects can reshape the relationship between the body and identity, using design as a way to confront insecurities and reinterpret them through experimentation and form.</div>
       </div>
     </section>
@@ -384,7 +421,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Draping Study</span>
           <h2 class="proj-page-title">Experimental Draping Study</h2>
         </div>
-        <div class="proj-images"><img src="images/img_003_a05f9612b6d5.jpeg" alt="Experimental Draping Study" class="proj-img"><img src="images/img_030_8a39b6aec929.jpeg" alt="Experimental Draping Study" class="proj-img"><img src="images/img_031_9c84f23ae941.jpeg" alt="Experimental Draping Study" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_003_a05f9612b6d5.jpeg" alt="Experimental Draping Study" class="proj-img" onclick="openLightbox(this)"><img src="images/img_030_8a39b6aec929.jpeg" alt="Experimental Draping Study" class="proj-img" onclick="openLightbox(this)"><img src="images/img_031_9c84f23ae941.jpeg" alt="Experimental Draping Study" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project is an experimental draping study exploring sculptural form, volume, and silhouette through intuitive fabric manipulation. The garment was created entirely by hand directly on the mannequin without stitching or conventional pattern-making, using only draping, folding, gathering, and pinning techniques. By allowing the fabric to guide the process organically, the piece developed into a fluid yet structured form that emphasizes movement, texture, and spatial experimentation.<br><br>The exaggerated folds and asymmetrical volumes transform the garment into a three-dimensional sculptural surface, distorting the natural silhouette and creating a balance between softness and structure. Through this process, the project explores draping not only as a technical skill but also as an expressive and artistic design method, where fabric becomes a medium for experimentation, transformation, and form-building.</div>
       </div>
     </section>
@@ -395,7 +432,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Photography</span>
           <h2 class="proj-page-title">Old Lahore — Street Food Photography</h2>
         </div>
-        <div class="proj-images"><img src="images/img_004_c5f986a78f30.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_033_03dd753498d9.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_034_355ce993e1b7.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_035_dc2f85cae154.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_036_3020f3f65ae8.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"><img src="images/img_037_c1bfe289aa53.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_004_c5f986a78f30.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_033_03dd753498d9.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_034_355ce993e1b7.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_035_dc2f85cae154.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_036_3020f3f65ae8.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_037_c1bfe289aa53.jpeg" alt="Old Lahore — Street Food Photography" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This photography project documents the atmosphere, labor, and sensory experience of Old Lahore's food streets through candid visual storytelling. Focusing on local food vendors, traditional cooking methods, and the environments surrounding them, the project captures the energy and authenticity embedded within Lahore's street food culture. Through close-up compositions, steam-filled frames, textures, and moments of preparation, the photographs highlight the relationship between food, people, and everyday urban life.<br><br>The series explores the behind-the-scenes process, the intensity of large-scale cooking, the worn utensils, and the human presence behind every meal. From simmering pots and freshly cooked parathas to quiet details within the food stalls, the images aim to preserve the atmosphere and visual richness of Old Lahore's culinary spaces. The warm tones, documentary-style framing, and focus on ordinary moments create a sense of nostalgia and realism.</div>
       </div>
     </section>
@@ -406,7 +443,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Textile Design</span>
           <h2 class="proj-page-title">Period Poverty — Fashion as Social Commentary</h2>
         </div>
-        <div class="proj-images"><img src="images/img_005_48cc401d9881.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_039_082bb299f79c.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_040_7a7a20caadc3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"><img src="images/img_041_4bf9d8b766e3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_005_48cc401d9881.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img" onclick="openLightbox(this)"><img src="images/img_039_082bb299f79c.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img" onclick="openLightbox(this)"><img src="images/img_040_7a7a20caadc3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img" onclick="openLightbox(this)"><img src="images/img_041_4bf9d8b766e3.jpeg" alt="Period Poverty — Fashion as Social Commentary" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project explores the issue of period poverty through the intersection of printmaking, textile design, and draped fashion. The concept was developed around the silence, stigma, and lack of accessibility surrounding menstruation, particularly for women who experience financial, social, and cultural barriers related to menstrual health. I created an original print inspired by the emotional and physical realities associated with menstruation, combining abstract organic forms, layered textures, splashes, stains, and delicate floral imagery to symbolize the contrast between pain and softness, discomfort and femininity, visibility and suppression.<br><br>After developing the print, it was digitally transferred onto fabric and transformed into a sculptural draped garment created entirely on the mannequin without stitching. The garment was formed through draping, wrapping, pleating, and fabric manipulation, allowing the textile print itself to become the primary storytelling element. The project also explores how fashion and textiles can be used as mediums for social commentary and awareness rather than purely aesthetic objects.</div>
       </div>
     </section>
@@ -417,7 +454,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Couture</span>
           <h2 class="proj-page-title">Serpent Queen — Narrative Fashion</h2>
         </div>
-        <div class="proj-images"><img src="images/img_006_cc69e7d05109.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_043_ef193547c756.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_044_59f2c12246b7.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"><img src="images/img_045_cbb9ac9cafa1.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_006_cc69e7d05109.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img" onclick="openLightbox(this)"><img src="images/img_043_ef193547c756.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img" onclick="openLightbox(this)"><img src="images/img_044_59f2c12246b7.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img" onclick="openLightbox(this)"><img src="images/img_045_cbb9ac9cafa1.jpeg" alt="Serpent Queen — Narrative Fashion" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project is a narrative-based fashion exploration inspired by the mythology and symbolism of snakes, particularly the idea of a serpent queen who represents power, transformation, seduction, and rebirth. The garment was developed as a character-driven visual story, combining fashion, printmaking, and textile experimentation to create a dark yet regal aesthetic. Inspired by serpentine textures, fantasy narratives, and mythical femininity, the project explores the snake not only as a symbol of danger, but also as a representation of resilience, protection, and feminine strength.<br><br>As part of the process, I designed and developed an original print inspired by snake skin textures, scales, shadows, and organic flowing forms. Deep reds, blacks, and dark maroon tones were used to evoke intensity, mystery, royalty, and danger. The outfit consists of a structured corset-inspired top paired with a flowing skirt and a sheer veil-like outer layer. Military-inspired elements were also incorporated, adding a sense of armor and authority to the overall character.</div>
       </div>
     </section>
@@ -428,7 +465,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Photography</span>
           <h2 class="proj-page-title">Pottery Workers — Documentary Photography</h2>
         </div>
-        <div class="proj-images"><img src="images/img_007_09e493e33c88.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_047_0b4a3cbd1521.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_048_8315ceabf0ab.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_049_debf860daef1.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_050_171464ea691d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_051_e233f81f823f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_052_4d1fcc42421f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_053_160d8afb960d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"><img src="images/img_054_35cffa937a3c.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_007_09e493e33c88.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_047_0b4a3cbd1521.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_048_8315ceabf0ab.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_049_debf860daef1.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_050_171464ea691d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_051_e233f81f823f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_052_4d1fcc42421f.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_053_160d8afb960d.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"><img src="images/img_054_35cffa937a3c.jpeg" alt="Pottery Workers — Documentary Photography" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This photography project documents the lives and labour of local pottery workers, focusing on the physical process of shaping clay as well as the environment in which these artisans work. Through close-up details, textures, and environmental shots, the series captures the relationship between human hands, earth, movement, and tradition. The photographs explore pottery not only as a craft, but as a form of storytelling and cultural heritage that has been passed down through generations.<br><br>The project highlights the contrast between the beauty of handmade craftsmanship and the reality of the labour behind it. The series includes intimate photographs of hands moulding clay on the wheel, textures of wet earth, spinning pottery forms, and the surfaces of unfinished ceramic pieces. Through this series, I wanted to bring attention to the emotional and economic realities of artisans whose work is deeply connected to culture and tradition, yet often remains underappreciated.</div>
       </div>
     </section>
@@ -439,7 +476,7 @@ function switchThesisTab(lookNum){
           <span class="proj-tag-label">Avant-Garde</span>
           <h2 class="proj-page-title">Mermaid — Childhood to Adulthood</h2>
         </div>
-        <div class="proj-images"><img src="images/img_008_14ce997ffda0.jpeg" alt="Mermaid — Childhood to Adulthood" class="proj-img"></div>
+        <div class="proj-images"><img src="images/img_008_14ce997ffda0.jpeg" alt="Mermaid — Childhood to Adulthood" class="proj-img" onclick="openLightbox(this)"></div>
         <div class="proj-desc">This project explores the psychological and emotional transition from childhood innocence to adulthood awareness through fashion and visual storytelling. The main idea behind the project is to question why perception changes as we grow older, and how the things we once viewed with wonder, softness, and comfort slowly begin to feel darker, more complex, and emotionally layered.<br><br>To communicate this transformation, I used the concept of mermaids as the central visual metaphor throughout the collection. In childhood, mermaids are often seen as magical, beautiful, gentle, and comforting creatures. However, as we grow older, the perception of mermaids changes — they become mysterious, seductive, dangerous, and emotionally darker figures. The garments and visual elements were designed to capture this emotional duality: soft pastel tones, flowing silhouettes, and translucent layers represent childhood softness, while distorted forms, exaggerated structures, and darker undertones reflect the emotional complexity of adulthood.</div>
       </div>
     </section>
@@ -466,10 +503,10 @@ function switchThesisTab(lookNum){
             <span class="look-num">Look 01 — Innocence</span>
             <h3>The Childhood Mermaid</h3>
           </div>
-          <div class="proj-images">
-            <img src="images/look1_full.jpeg" alt="Look 1 — Full View" class="proj-img">
-            <img src="images/look1_face.jpeg" alt="Look 1 — Detail" class="proj-img">
-            <img src="images/look1_detail.jpeg" alt="Look 1 — Embroidery Detail" class="proj-img">
+          <div class="thesis-images-grid">
+            <img src="images/look1_full.jpeg" alt="Look 1 — Full View" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look1_face.jpeg" alt="Look 1 — Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look1_detail.jpeg" alt="Look 1 — Embroidery Detail" class="proj-img" onclick="openLightbox(this)">
           </div>
           <div class="thesis-look-desc">
             <p>The first look embodies the innocence of the mermaid as remembered through childhood stories and imagination. Constructed with transparent acrylic and adorned with vibrant hand embroidery inspired by underwater flora, the look captures a sense of playfulness, purity, and discovery. A sculptural wig extends the fantasy, enhancing the dreamlike quality of the silhouette and evoking the iconic image of the mermaid preserved in childhood memory. The light, youthful silhouette reflects a world where the ocean is magical, gentle and untouched by the darker narratives that follow.</p>
@@ -481,10 +518,10 @@ function switchThesisTab(lookNum){
             <span class="look-num">Look 02 — Transformation</span>
             <h3>The Beginning of Mystery</h3>
           </div>
-          <div class="proj-images">
-            <img src="images/look2_full.jpeg" alt="Look 2 — Full View" class="proj-img">
-            <img src="images/look2_face.jpeg" alt="Look 2 — Detail" class="proj-img">
-            <img src="images/look2_detail.jpeg" alt="Look 2 — Sea Urchin Detail" class="proj-img">
+          <div class="thesis-images-grid">
+            <img src="images/look2_full.jpeg" alt="Look 2 — Full View" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look2_face.jpeg" alt="Look 2 — Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look2_detail.jpeg" alt="Look 2 — Sea Urchin Detail" class="proj-img" onclick="openLightbox(this)">
           </div>
           <div class="thesis-look-desc">
             <p>The second look marks the beginning of transformation, where innocence gradually intertwines with mystery. A sculptural hoop silhouette inspired by the mermaid's hip shape introduces volume and movement while textured embellishments influenced by sea urchins and marine life create depth and intrigue. Soft yet structured, the garment represents the moment when fascination begins to replace familiarity, hinting at the seductive power hidden beneath the surface.</p>
@@ -496,11 +533,11 @@ function switchThesisTab(lookNum){
             <span class="look-num">Look 03 — Allure</span>
             <h3>The Hypnotic Mermaid</h3>
           </div>
-          <div class="proj-images">
-            <img src="images/look3_full.jpeg" alt="Look 3 — Full View" class="proj-img">
-            <img src="images/look3_face.jpeg" alt="Look 3 — Detail" class="proj-img">
-            <img src="images/look3_detail.jpeg" alt="Look 3 — Beadwork Detail" class="proj-img">
-            <img src="images/look3_back.jpeg" alt="Look 3 — Wire Structure" class="proj-img">
+          <div class="thesis-images-grid">
+            <img src="images/look3_full.jpeg" alt="Look 3 — Full View" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look3_face.jpeg" alt="Look 3 — Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look3_detail.jpeg" alt="Look 3 — Beadwork Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look3_back.jpeg" alt="Look 3 — Wire Structure" class="proj-img" onclick="openLightbox(this)">
           </div>
           <div class="thesis-look-desc">
             <p>The third look explores the hypnotic and alluring nature of the mythical mermaid. Wire structures inspired by the rhythm of ocean waves wrap around the body, while intricate beadwork and delicate threads create an illusion of movement and entrapment. The balance of transparency and structure reflects the tension between attraction and danger, expressing the irresistible pull of a beauty that conceals hidden power.</p>
@@ -512,12 +549,12 @@ function switchThesisTab(lookNum){
             <span class="look-num">Look 04 — Power</span>
             <h3>The Mythical Form</h3>
           </div>
-          <div class="proj-images">
-            <img src="images/look4_full.jpeg" alt="Look 4 — Full View" class="proj-img">
-            <img src="images/look4_face.jpeg" alt="Look 4 — Detail" class="proj-img">
-            <img src="images/look4_detail1.jpeg" alt="Look 4 — Corset Detail" class="proj-img">
-            <img src="images/look4_detail2.jpeg" alt="Look 4 — Full Silhouette" class="proj-img">
-            <img src="images/look4_detail3.jpeg" alt="Look 4 — Texture Detail" class="proj-img">
+          <div class="thesis-images-grid">
+            <img src="images/look4_full.jpeg" alt="Look 4 — Full View" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look4_face.jpeg" alt="Look 4 — Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look4_detail1.jpeg" alt="Look 4 — Corset Detail" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look4_detail2.jpeg" alt="Look 4 — Full Silhouette" class="proj-img" onclick="openLightbox(this)">
+            <img src="images/look4_detail3.jpeg" alt="Look 4 — Texture Detail" class="proj-img" onclick="openLightbox(this)">
           </div>
           <div class="thesis-look-desc">
             <p>The final look represents the mermaid in her most powerful and mythical form. A flowing ombré silk skirt evokes the depths of the ocean, while an organza corset layered with latex and textured to resemble sand blurs the boundary between the human body and the seascape. The same sand-like texture continues onto the skirt, creating a cohesive surface that reflects the shoreline where land and sea converge. Rich hand embroidery, intricate beadwork, and organic textures celebrate craftsmanship while echoing the shifting landscapes beneath the tide. Dark, dramatic, and ethereal, the look embodies the seductive yet dangerous essence of the mermaid bringing the narrative to its final evolution where beauty and peril become inseparable.</p>
@@ -525,6 +562,13 @@ function switchThesisTab(lookNum){
         </div>
       </div>
     </section>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation();lightboxNav(-1)">‹</button>
+  <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation();lightboxNav(1)">›</button>
+  <img id="lightbox-img" src="" alt="Zoomed view" onclick="event.stopPropagation()">
+</div>
 
 </body>
 </html>
