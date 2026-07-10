@@ -129,50 +129,119 @@ footer{padding:32px 40px;text-align:center;border-top:1px solid var(--border);fo
 .lightbox-prev{left:16px}
 .lightbox-next{right:16px}
 @media(max-width:768px){
-  .thesis-preview-inner{grid-template-columns:1fr}
-  .thesis-tabs{flex-wrap:wrap}
-  .thesis-tab{padding:12px 16px;font-size:10px}
-  .lightbox-nav{font-size:24px;padding:12px}
+  /* NAV */
+  nav{padding:0 16px;height:50px}
+  .nav-brand{font-size:14px;letter-spacing:.15em}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:10px;letter-spacing:.12em}
+  /* HERO */
+  .hero-name{letter-spacing:.06em}
+  .hero-sub{font-size:10px;letter-spacing:.2em}
+  .hero-cta{padding:12px 28px;font-size:10px}
+  /* SECTIONS */
+  .section{padding:60px 20px}
+  .section-header{flex-direction:column;gap:8px;margin-bottom:40px}
+  /* PROJECT GRID */
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .card-info{padding:14px 12px}
+  .card-title{font-size:13px}
+  /* BIO */
+  .bio-section{padding:60px 20px}
+  .bio-inner{grid-template-columns:1fr;gap:40px}
+  .bio-name-block h2{font-size:32px}
+  /* CONTACT */
+  .contact-section{padding:60px 20px}
+  .contact-card{padding:28px 20px}
+  .social-links{flex-direction:column;gap:16px;align-items:center}
+  /* THESIS PREVIEW */
+  .thesis-preview{padding:60px 20px}
+  .thesis-preview-inner{grid-template-columns:1fr;gap:40px}
+  /* THESIS DETAIL */
+  .thesis-page-inner{padding:40px 20px}
+  .thesis-tabs{flex-wrap:wrap;gap:0}
+  .thesis-tab{padding:12px 16px;font-size:10px;flex:1;text-align:center}
+  .thesis-images-grid{gap:2px}
+  .thesis-look-desc{font-size:14px}
+  .thesis-about p{font-size:13px}
+  /* PROJECT DETAIL */
+  .proj-page-inner{padding:40px 20px}
+  .proj-images{grid-template-columns:1fr;gap:2px}
+  .proj-desc{font-size:14px}
+  /* LIGHTBOX */
+  .lightbox-nav{font-size:28px;padding:12px}
+  .lightbox-close{font-size:24px;top:12px;right:16px}
+  /* FOOTER */
+  footer{padding:24px 20px;font-size:9px}
 }
-@media(max-width:480px){.projects-grid{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .projects-grid{grid-template-columns:1fr}
+  .nav-links{gap:12px}
+  .nav-links a{font-size:9px}
+  .hero-name{font-size:clamp(36px,10vw,56px)}
+  .section-heading{font-size:clamp(22px,6vw,32px)}
+  .thesis-tab{padding:10px 12px;font-size:9px}
+  .back-btn{padding:8px 16px;font-size:10px}
+}
 </style>
 <script>
-function showAllNone(){
-  var pages=document.getElementsByClassName('proj-page');
+var currentPage='home';
+function hideAll(){
+  var pages=document.querySelectorAll('.proj-page,.thesis-page');
   for(var i=0;i<pages.length;i++){
     pages[i].style.display='none';
   }
 }
 function showHome(){
-  showAllNone();
+  hideAll();
   document.getElementById('home-view').style.display='block';
+  currentPage='home';
   window.scrollTo(0,0);
 }
 function showProject(id){
   var pg=document.getElementById('project-'+id);
   if(pg){
-    showAllNone();
+    hideAll();
     document.getElementById('home-view').style.display='none';
     pg.style.display='block';
+    currentPage='project-'+id;
     window.scrollTo(0,0);
+    history.pushState({page:'project',id:id},'','');
   } else {
-    setTimeout(function(){showProject(id);}, 300);
+    setTimeout(function(){showProject(id);},300);
   }
 }
 function scrollToSection(id){
-  showAllNone();
+  hideAll();
   document.getElementById('home-view').style.display='block';
+  currentPage='home';
   setTimeout(function(){
     var el=document.getElementById(id);
     if(el)el.scrollIntoView({behavior:'smooth'});
   },100);
 }
 function showThesis(){
-  showAllNone();
+  hideAll();
   document.getElementById('home-view').style.display='none';
   document.getElementById('thesis-view').style.display='block';
+  currentPage='thesis';
+  window.scrollTo(0,0);
+  history.pushState({page:'thesis'},'','');
+}
+function showHomeFromBack(){
+  hideAll();
+  document.getElementById('home-view').style.display='block';
+  currentPage='home';
   window.scrollTo(0,0);
 }
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.page==='thesis'){
+    showThesis();
+  }else if(e.state&&e.state.page==='project'){
+    showProject(e.state.id);
+  }else{
+    showHomeFromBack();
+  }
+});
 function switchThesisTab(lookNum){
   var tabs=document.querySelectorAll('.thesis-tab');
   var contents=document.querySelectorAll('.thesis-tab-content');
@@ -317,7 +386,7 @@ document.addEventListener('keydown',function(e){
       <img class="thesis-preview-img" src="images/look1_full.jpeg" alt="Mermaid Thesis Collection — Look 1">
       <div class="thesis-preview-text">
         <span class="label">Final Year Thesis — BNU Lahore</span>
-        <h2>Beneath the Surface — The Mermaid Collection</h2>
+        <h2>HYPNOTIC ENCHANTMENT</h2>
         <p>The collection explores how our perception of the world evolves with time, revealing that the stories and symbols we encounter in childhood often hold deeper and more complex meanings in adulthood. Using the mermaid as a metaphor, the collection traces the transformation of a figure once perceived as innocent and whimsical into one rooted in mythology where beauty coexists with seduction, power, and danger.</p>
         <span class="thesis-cta" onclick="showThesis()">View Full Collection</span>
       </div>
@@ -487,7 +556,7 @@ document.addEventListener('keydown',function(e){
 
         <div class="thesis-about">
           <span class="proj-tag-label">Final Year Thesis — BNU Lahore</span>
-          <h2 class="proj-page-title" style="margin-bottom:24px">Beneath the Surface</h2>
+          <h2 class="proj-page-title" style="margin-bottom:24px">HYPNOTIC ENCHANTMENT</h2>
           <p>The collection explores how our perception of the world evolves with time revealing that the stories and symbols we encounter in childhood often hold deeper and more complex meanings in adulthood. Using the mermaid as a metaphor the collection traces the transformation of a figure once perceived as innocent, whimsical, and enchanting into one rooted in mythology where beauty coexists with seduction, power, and danger. This shift reflects the way understanding is shaped by experience uncovering the layers hidden beneath familiar narratives. Through sculptural silhouettes, handcrafted textiles, transparency, and fluid movement, each look represents a stage in this journey inviting the viewer to look beyond the surface and embrace the complexity that lies beneath.</p>
         </div>
 
